@@ -1,6 +1,4 @@
-(ns adventofcode.day2
-  (:require [clojure.string :as str]))
-
+(ns adventofcode.day2)
 
 ; Part 1
 (defn parse-pw [pw]
@@ -18,6 +16,7 @@
         freqs (frequencies pass)
         count (get freqs ch 0)]
     (and (>= count min) (<= count max))))
+
 (def input ["1-9 x: xwjgxtmrzxzmkx"
             "4-6 r: rrrkrgr"
             "4-5 v: vvfvvvn"
@@ -1023,4 +1022,24 @@
                   "1-3 b: cdefg"
                   "2-9 c: ccccccccc"])
 
-((frequencies (map #(is-valid? (parse-pw %)) input)) true)
+(->> input
+     (map #(is-valid? (parse-pw %)))
+     frequencies
+     #(get % true 0))
+
+
+; Part 2
+
+(defn actually-valid? [password]
+  (let [{pos1 :min pos2 :max char :char pass :pass} password
+        char1 (nth pass (- pos1 1) "")
+        char2 (nth pass (- pos2 1) "")
+        character (nth char 0)]
+    (or (and (= char1 character) (not= char2 character)) (and (= char2 character) (not= char1 character)))
+    ; [char1, char2, character]
+    ))
+
+(actually-valid? (parse-pw "1-3 a: abcde"))
+(->> input
+     (map #(actually-valid? (parse-pw %)))
+     frequencies)
