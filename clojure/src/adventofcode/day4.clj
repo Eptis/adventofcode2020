@@ -66,8 +66,10 @@ iyr:2011 ecl:brn hgt:59in")
 
 
 (defn parse-password [passport]
-  (into {} (map (fn [x] (str/split x #"\:"))
-                (vec passport))))
+  (->> passport
+       (map #(str/split % #"\:"))
+       (into {})))
+
 
 (->>
  (str/split input #"\n\n")
