@@ -38,7 +38,6 @@ iyr:2011 ecl:brn hgt:59in")
 (defn validate-ecl [ecl]
   (some #(= % ecl) ["amb" "blu" "brn" "gry" "grn" "hzl" "oth"]))
 
-
 (defn in-range [year min max]
   (and (<=  (Integer/parseInt year) max)
        (>= (Integer/parseInt year) min)))
@@ -64,12 +63,10 @@ iyr:2011 ecl:brn hgt:59in")
                  (validate-hcl (get passport "hcl" ""))
                  (validate-pid (get passport "pid" ""))]))
 
-
 (defn parse-password [passport]
   (->> passport
        (map #(str/split % #"\:"))
        (into {})))
-
 
 (->>
  (str/split input #"\n\n")
