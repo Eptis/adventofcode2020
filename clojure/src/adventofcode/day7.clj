@@ -56,3 +56,15 @@ dotted black bags contain no other bags.")
      (count))
 
 ;; Part 2
+(defn bag-hold-count [holds bag-map]
+  (reduce (fn [acc [color count]]
+            (+ acc (+ count (* count (bag-hold-count (get bag-map color {}) bag-map))))) 0 holds))
+
+(defn solve2 [bag-map]
+  (bag-hold-count (get bag-map "shiny gold" {}) bag-map))
+
+(->> input
+     (str/split-lines)
+     (map parse-line)
+     (into {})
+     (solve2))
