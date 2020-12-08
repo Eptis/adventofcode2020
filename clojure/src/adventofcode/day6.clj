@@ -34,18 +34,13 @@ b")
                      (map char-array)
                      (reduce concat [])
                      frequencies)]
-    answers
-    ;; (reduce (fn [[question count] acc]
-    ;;           (println count group-size)
-    ;;           (if (= count group-size)
-    ;;             question
-    ;;             acc))
-    ;;         [] answers))
-  )
+    (reduce (fn [acc [k v]]
+              (if (= v group-size)
+                (cons k acc)
+                acc))
+            '() answers)))
 
-
-(->> (map str/split-lines (str/split test-input #"\R\R"))
+(->> (map str/split-lines (str/split input #"\R\R"))
      (map answered-yes-by-all)
-    ;;  (map #(map char-array %))
-    ;;  (map #(reduce concat [] %))
-     )
+     (map count)
+     (reduce +))
