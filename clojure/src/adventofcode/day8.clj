@@ -75,4 +75,6 @@ acc +6"))
   (some (fn [input]
           (let [[exit result] (execute input)]
             (if (= exit :terminate) result)))
-        (possible-solutions test-input)))
+        (possible-solutions input)))
+
+(solve2 input)
